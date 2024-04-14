@@ -63,7 +63,7 @@ async function onFinish(values) {
   try {
     console.log('Success:', values.email, values.password)
     let res = await login(values)
-    if (res.data.Tennhom === 'Admin') {
+    if (res.data.Tennhom === 'admin') {
       router.push('/admin')
     } else {
       router.push('/')
