@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+
 export const userLoginStore = defineStore('user', {
   state: () => ({
     _accessToken: '',
@@ -35,7 +36,7 @@ export const userLoginStore = defineStore('user', {
     login(payload) {
       this._accessToken = payload.accessToken
       window.localStorage.setItem('accessToken', JSON.stringify(payload.accessToken))
-      console.log('pinia', payload)
+      // console.log('pinia', payload)
       this._data = {
         _Userid: payload.data?.Userid || '',
         _Hoten: payload.data.Hoten,
@@ -61,6 +62,36 @@ export const userLoginStore = defineStore('user', {
     logout() {
       window.localStorage.removeItem('accessToken')
       this.setDefault()
+    }
+  }
+})
+
+export const cartStore = defineStore('cart', {
+  state: () => ({
+    _cart: []
+  }),
+  getters: {
+    cart(state) {
+      return state._cart
+    }
+  },
+  actions: {
+    addToCart(payload) {
+      if (this.findProduct(payload._id)) {
+        this.findProduct(payload._id)._quantity++
+        return
+      }
+      this._cart.push(payload)
+    },
+    removeFromCart(index) {
+      this._cart.splice(index, 1)
+      console.log(index)
+    },
+    clearCart() {
+      this._cart = []
+    },
+    findProduct(id) {
+      return this._cart.find((item) => item._id === id)
     }
   }
 })

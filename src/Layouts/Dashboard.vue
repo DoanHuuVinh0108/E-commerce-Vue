@@ -9,11 +9,11 @@
       <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
         <a-menu-item key="1" @click="getAllUser()">
           <user-outlined />
-          <span class="nav-text">nav 1</span>
+          <span class="nav-text">User Table</span>
         </a-menu-item>
-        <a-menu-item key="2">
+        <a-menu-item key="2" @click="getAllProduct()">
           <video-camera-outlined />
-          <span class="nav-text">nav 2</span>
+          <span class="nav-text">Product Table</span>
         </a-menu-item>
         <a-menu-item key="3">
           <upload-outlined />
@@ -37,7 +37,7 @@
         </a-menu-item>
         <a-menu-item key="8">
           <shop-outlined />
-          <span class="nav-text">nav 8</span>
+          <span class="nav-text">logout</span>
         </a-menu-item>
       </a-menu>
     </a-layout-sider>
@@ -45,7 +45,12 @@
       <a-layout-header :style="{ background: '#fff', padding: 0 }" />
       <a-layout-content :style="{ margin: '24px 16px 0', overflow: 'initial' }">
         <div :style="{ padding: '24px', background: '#fff', textAlign: 'center' }">
-          <UserTable @refreshUser="getAllUser" :userData="userData" />
+          <UserTable @refreshUser="getAllUser" :userData="userData" v-if="selectedKeys == 1" />
+          <ProductTable
+            :productData="productData"
+            @refreshProduct="getAllProduct"
+            v-if="selectedKeys == 2"
+          />
         </div>
       </a-layout-content>
       <a-layout-footer :style="{ textAlign: 'center' }">
@@ -57,14 +62,18 @@
 <script>
 import { ref } from 'vue'
 import UserTable from '@/components/UserTable.vue'
-import { getAllUser } from '../sevices/admin.service'
+import ProductTable from '@/components/ProductTable.vue'
+import { getAllUser, getAllProduct } from '../sevices/admin.service'
+import { userLoginStore } from '@/stores'
 export default {
   components: {
-    UserTable
+    UserTable,
+    ProductTable
   },
   data() {
     return {
       userData: [],
+      productData: [],
       selectedKeys: ref(['1'])
     }
   },
@@ -75,6 +84,19 @@ export default {
     async getAllUser() {
       let res = await getAllUser()
       this.userData = res.data
+    },
+    async getAllProduct() {
+      let res = await getAllProduct()
+      this.productData = res.data
+    }
+  },
+  watch: {
+    selectedKeys(newValue) {
+      if (newValue == 8) {
+        const { logout } = userLoginStore()
+        logout()
+        this.$router.push('/') // Navigate to login page after logout
+      }
     }
   }
 }
