@@ -7,14 +7,18 @@
   >
     <a-layout>
       <TheHeader />
-      <a-layout-content :style="contentStyle" style="background-color: #f5f5f5">
+      <a-layout-content
+        v-if="cartData.length > 0"
+        :style="contentStyle"
+        style="background-color: #f5f5f5"
+      >
         <a-row>
           <a-col :span="12" :offset="6" :style="{ width: '100%' }">
             <!-- Ensure cartData is properly populated before rendering cards -->
             <br />
             <a-card
               v-for="(cart, index) in cartData"
-              :key="cart._id"
+              :key="cart.Productid"
               :style="cardStyle"
               :body-style="{ padding: 0, overflow: 'hidden' }"
             >
@@ -24,7 +28,7 @@
                     alt="avatar"
                     :width="200"
                     :height="200"
-                    :src="cart._image"
+                    :src="cart.image"
                     :style="imgStyle"
                   />
 
@@ -42,14 +46,14 @@
                   <a-typography>
                     <a-typography-title :level="3">
                       <router-link
-                        :to="{ name: 'product', params: { id: cart._id } }"
+                        :to="{ name: 'product', params: { id: cart.Productid } }"
                         style="color: black"
-                        >{{ cart._name }}</router-link
+                        >{{ cart.Tensanpham }}</router-link
                       >
                     </a-typography-title>
 
                     <a-typography-text type="danger">{{
-                      formatPrice(cart._price)
+                      formatPrice(cart.Giasanpham)
                     }}</a-typography-text>
                     <div
                       style="
@@ -63,7 +67,7 @@
                         <label style="margin-right: 8px">Quantity:</label>
                         <a-input-number
                           id="inputNumber"
-                          v-model:value="cart._quantity"
+                          v-model:value="cart.Soluong"
                           :min="1"
                           :max="10"
                         />
@@ -71,7 +75,7 @@
                       <div>
                         <label style="margin-right: 8px">Total:</label>
                         <a-typography-text type="danger">{{
-                          formatPrice(cart._price * cart._quantity)
+                          formatPrice(cart.Giasanpham * cart.Soluong)
                         }}</a-typography-text>
                       </div>
                     </div>
@@ -107,26 +111,79 @@
                 padding: 10px;
               "
             >
-              <a-button type="primary">Đặt Hàng</a-button>
+              <a-button @click="showConfirm" type="primary">Đặt Hàng</a-button>
               <!-- Add a button here -->
             </div>
           </a-col>
         </a-row>
       </a-layout-content>
-      <a-layout-footer>Footer</a-layout-footer>
+
+      <a-layout-content v-else>
+        <div style="min-height: 400px; display: flex; justify-content: center; align-items: center">
+          <a-empty
+            image="https://gw.alipayobjects.com/mdn/miniapp_social/afts/img/A*pevERLJC9v0AAAAAAAAAAABjAQAAAQ/original"
+            :image-style="{
+              height: '60px'
+            }"
+          >
+            <template #description>
+              <span>
+                Giỏ hàng của bạn đang trống. Hãy thêm sản phẩm vào giỏ hàng để tiếp tục mua sắm.
+              </span>
+            </template>
+          </a-empty>
+        </div>
+      </a-layout-content>
+
+      <a-layout-footer style="text-align: center; padding: 0px 0px">
+        <FooterComponent> </FooterComponent>
+      </a-layout-footer>
     </a-layout>
   </a-space>
 </template>
 
 <script>
-import { cartStore } from '../stores/index.js'
 import TheHeader from '@/components/TheHeader.vue'
 import { DeleteOutlined } from '@ant-design/icons-vue'
-
+import { ExclamationCircleOutlined } from '@ant-design/icons-vue'
+import { createVNode } from 'vue'
+import { Modal } from 'ant-design-vue'
+import { orderProduct } from '@/sevices/user.service.js'
+import { userLoginStore, cartStore } from '@/stores/index.js'
+import FooterComponent from '@/components/Footer.vue'
 export default {
   components: {
     TheHeader,
-    DeleteOutlined
+    DeleteOutlined,
+    FooterComponent
+  },
+  setup() {
+    const showConfirm = () => {
+      Modal.confirm({
+        title: 'Xác nhận đặt hàng?',
+        icon: createVNode(ExclamationCircleOutlined),
+        content: 'Quý khách có chắc chắn muốn đặt hàng không?',
+        async onOk() {
+          try {
+            const { user } = userLoginStore()
+            const id = user._Userid
+            const { cart, clearCart } = cartStore()
+            const order = cart
+            const result = await orderProduct(id, order)
+            clearCart()
+            console.log('result', result)
+            console.log('id', id)
+          } catch (error) {
+            console.error('Error ordering product:', error)
+          }
+        },
+
+        onCancel() {}
+      })
+    }
+    return {
+      showConfirm
+    }
   },
   data() {
     return {
@@ -162,7 +219,7 @@ export default {
   },
   computed: {
     total() {
-      return this.cartData.reduce((acc, item) => acc + item._price * item._quantity, 0)
+      return this.cartData.reduce((acc, item) => acc + item.Giasanpham * item.Soluong, 0)
     }
   }
 }

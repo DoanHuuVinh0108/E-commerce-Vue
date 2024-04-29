@@ -46,7 +46,7 @@
               <a-menu @click="handleMenuClick">
                 <a-menu-item key="1">
                   <UserOutlined />
-                  1st menu item
+                  profile
                 </a-menu-item>
                 <a-menu-item key="2">
                   <LogoutOutlined />
@@ -84,6 +84,9 @@ export default {
 
     const handleMenuClick = (e) => {
       const { logout } = userLoginStore()
+      if (e.key == 1) {
+        router.push('/order')
+      }
       if (e.key == 2) {
         logout()
         router.push('/') // Navigate to login page after logout

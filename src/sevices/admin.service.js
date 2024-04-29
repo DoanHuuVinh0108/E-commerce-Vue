@@ -133,6 +133,31 @@ async function getListProduct(offset) {
   return false
 }
 
+async function getOrdersById(id) {
+  const response = await axios.get(`/api/v1/order/get-orderid/${id}`)
+  if (response.status === 200) {
+    return response.data
+  }
+  return false
+}
+
+async function updateOrder(id, data) {
+  const api = axios.put(`/api/v1/order/update/${id}`, data)
+  const response = await toastMsgFromPromise(api)
+  if (response.status === 200) {
+    return true
+  }
+  return false
+}
+
+async function getCountProduct() {
+  const response = await axios.get('/api/v1/product/count')
+  if (response.status === 200) {
+    return response.data
+  }
+  return false
+}
+
 export {
   getAllUser,
   deleteUser,
@@ -148,5 +173,8 @@ export {
   getProductById,
   getImageByProductId,
   createImage,
-  getListProduct
+  getListProduct,
+  getOrdersById,
+  updateOrder,
+  getCountProduct
 }

@@ -25,4 +25,49 @@ async function searchProduct(name) {
   return false
 }
 
-export { registerUser, searchProduct }
+async function orderProduct(Userid, cart) {
+  const payload = {
+    Userid: Userid,
+    detailorder: cart
+  }
+
+  const api = axios.post('/api/v1/order/create', payload)
+  const response = await toastMsgFromPromise(api)
+  if (response.status === 200) {
+    return response.data
+  }
+  return false
+}
+
+async function getOrdersByUser(Userid) {
+  const response = await axios.get(`/api/v1/order/get/${Userid}`)
+  if (response.status === 200) {
+    return response.data
+  }
+  return false
+}
+
+async function getNameAndImageProduct(id) {
+  const response = await axios.get(`/api/v1/product/get-name-image/${id}`)
+  if (response.status === 200) {
+    return response.data
+  }
+  return false
+}
+
+async function getAllOrders() {
+  const response = await axios.get('/api/v1/order/get-all')
+  if (response.status === 200) {
+    return response.data
+  }
+  return false
+}
+
+export {
+  registerUser,
+  searchProduct,
+  orderProduct,
+  getOrdersByUser,
+  getNameAndImageProduct,
+  getAllOrders
+}

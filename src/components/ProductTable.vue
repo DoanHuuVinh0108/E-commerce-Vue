@@ -16,6 +16,12 @@
           text.toUpperCase()
         }}</a-tag>
       </template>
+      <template v-else-if="column.key === 'Mota'">
+        <a-typography-paragraph
+          :ellipsis="ellipsis ? { rows: 2, expandable: true, symbol: 'more' } : false"
+          :content="text"
+        />
+      </template>
       <template v-else>
         {{ text }}
       </template>
@@ -29,6 +35,7 @@ import { deleteProduct } from '../sevices/admin.service'
 import CreateProduct from './Modals/CreateProduct.vue'
 import UpdateProduct from './Modals/UpdateProduct.vue'
 import ImageModel from './Modals/ImageModel.vue'
+import { ref } from 'vue'
 
 export default {
   name: 'UserTable',
@@ -146,7 +153,8 @@ export default {
           fixed: 'right',
           width: 100
         }
-      ]
+      ],
+      ellipsis: ref(true)
     }
   },
   methods: {

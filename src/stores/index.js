@@ -77,8 +77,8 @@ export const cartStore = defineStore('cart', {
   },
   actions: {
     addToCart(payload) {
-      if (this.findProduct(payload._id)) {
-        this.findProduct(payload._id)._quantity++
+      if (this.findProduct(payload.Productid)) {
+        this.findProduct(payload.Productid)._quantity++
         return
       }
       this._cart.push(payload)
@@ -91,7 +91,7 @@ export const cartStore = defineStore('cart', {
       this._cart = []
     },
     findProduct(id) {
-      return this._cart.find((item) => item._id === id)
+      return this._cart.find((item) => item.Productid === id)
     }
   }
 })

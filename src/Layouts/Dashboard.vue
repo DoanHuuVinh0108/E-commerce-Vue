@@ -15,9 +15,9 @@
           <video-camera-outlined />
           <span class="nav-text">Product Table</span>
         </a-menu-item>
-        <a-menu-item key="3">
+        <a-menu-item key="3" @click="getAllOrder()">
           <upload-outlined />
-          <span class="nav-text">nav 3</span>
+          <span class="nav-text">Order Table</span>
         </a-menu-item>
         <a-menu-item key="4">
           <bar-chart-outlined />
@@ -51,10 +51,15 @@
             @refreshProduct="getAllProduct"
             v-if="selectedKeys == 2"
           />
+          <OrderTable
+            :OrdersData="orderData"
+            @refreshOrders="getAllOrder"
+            v-if="selectedKeys == 3"
+          />
         </div>
       </a-layout-content>
-      <a-layout-footer :style="{ textAlign: 'center' }">
-        Ant Design ©2018 Created by Ant UED
+      <a-layout-footer style="text-align: center; padding: 0px 0px">
+        <FooterComponent />
       </a-layout-footer>
     </a-layout>
   </a-layout>
@@ -63,17 +68,23 @@
 import { ref } from 'vue'
 import UserTable from '@/components/UserTable.vue'
 import ProductTable from '@/components/ProductTable.vue'
+import OrderTable from '@/components/OrderTable.vue'
 import { getAllUser, getAllProduct } from '../sevices/admin.service'
+import { getAllOrders } from '../sevices/user.service'
 import { userLoginStore } from '@/stores'
+import FooterComponent from '@/components/Footer.vue'
 export default {
   components: {
     UserTable,
-    ProductTable
+    ProductTable,
+    OrderTable,
+    FooterComponent
   },
   data() {
     return {
       userData: [],
       productData: [],
+      orderData: [],
       selectedKeys: ref(['1'])
     }
   },
@@ -88,6 +99,10 @@ export default {
     async getAllProduct() {
       let res = await getAllProduct()
       this.productData = res.data
+    },
+    async getAllOrder() {
+      let res = await getAllOrders()
+      this.orderData = res.data
     }
   },
   watch: {

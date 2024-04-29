@@ -140,8 +140,8 @@
         </a-col>
       </a-row>
     </a-layout-content>
-    <a-layout-footer :style="{ textAlign: 'center' }">
-      Ant Design ©2018 Created by Ant UED
+    <a-layout-footer style="text-align: center; padding: 0px 0px">
+      <FooterComponent />
     </a-layout-footer>
   </a-layout>
 </template>
@@ -151,12 +151,13 @@ import TheHeader from '@/components/TheHeader.vue'
 import { LeftCircleOutlined, RightCircleOutlined } from '@ant-design/icons-vue'
 import { getImageByProductId, getProductById } from '@/sevices/admin.service.js'
 import { cartStore } from '@/stores/index.js'
-
+import FooterComponent from '@/components/Footer.vue'
 export default {
   components: {
     TheHeader,
     LeftCircleOutlined,
-    RightCircleOutlined
+    RightCircleOutlined,
+    FooterComponent
   },
   props: {
     Productid: Number
@@ -230,11 +231,11 @@ export default {
     addProducToCart() {
       const { addToCart } = cartStore()
       addToCart({
-        _id: this.productData.Productid,
-        _quantity: 1,
-        _price: this.productData.Giasanpham,
-        _name: this.productData.Tensanpham,
-        _image: this.firstImage
+        Productid: this.productData.Productid,
+        Soluong: 1,
+        Giasanpham: this.productData.Giasanpham,
+        Tensanpham: this.productData.Tensanpham,
+        image: this.firstImage
       })
     }
   },
