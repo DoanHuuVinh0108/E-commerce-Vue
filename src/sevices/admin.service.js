@@ -158,6 +158,41 @@ async function getCountProduct() {
   return false
 }
 
+async function createCategory(data) {
+  const api = axios.post('/api/v1/category/create', data)
+  const response = await toastMsgFromPromise(api)
+  if (response.status === 200) {
+    return true
+  }
+  return false
+}
+
+async function updateCategory(data) {
+  const api = axios.put('/api/v1/category/update', data)
+  const response = await toastMsgFromPromise(api)
+  if (response.status === 200) {
+    return true
+  }
+  return false
+}
+
+async function deleteCategory(id) {
+  const api = axios.delete(`/api/v1/category/delete/${id}`)
+  const response = await toastMsgFromPromise(api)
+  if (response.status === 200) {
+    return true
+  }
+  return false
+}
+
+async function getCategoryById(id) {
+  const response = await axios.get(`/api/v1/category/get/${id}`)
+  if (response.status === 200) {
+    return response.data
+  }
+  return false
+}
+
 export {
   getAllUser,
   deleteUser,
@@ -176,5 +211,9 @@ export {
   getListProduct,
   getOrdersById,
   updateOrder,
-  getCountProduct
+  getCountProduct,
+  createCategory,
+  updateCategory,
+  deleteCategory,
+  getCategoryById
 }

@@ -19,9 +19,9 @@
           <upload-outlined />
           <span class="nav-text">Order Table</span>
         </a-menu-item>
-        <a-menu-item key="4">
+        <a-menu-item key="4" @click="getAllCategory()">
           <bar-chart-outlined />
-          <span class="nav-text">nav 4</span>
+          <span class="nav-text">Category Table</span>
         </a-menu-item>
         <a-menu-item key="5">
           <cloud-outlined />
@@ -56,6 +56,11 @@
             @refreshOrders="getAllOrder"
             v-if="selectedKeys == 3"
           />
+          <CategoryTable
+            :CategoryData="categoryData"
+            @refreshCategory="getAllCategory"
+            v-if="selectedKeys == 4"
+          />
         </div>
       </a-layout-content>
       <a-layout-footer style="text-align: center; padding: 0px 0px">
@@ -69,7 +74,8 @@ import { ref } from 'vue'
 import UserTable from '@/components/UserTable.vue'
 import ProductTable from '@/components/ProductTable.vue'
 import OrderTable from '@/components/OrderTable.vue'
-import { getAllUser, getAllProduct } from '../sevices/admin.service'
+import CategoryTable from '@/components/CategoryTable.vue'
+import { getAllUser, getAllProduct, getAllCategory } from '../sevices/admin.service'
 import { getAllOrders } from '../sevices/user.service'
 import { userLoginStore } from '@/stores'
 import FooterComponent from '@/components/Footer.vue'
@@ -78,13 +84,15 @@ export default {
     UserTable,
     ProductTable,
     OrderTable,
-    FooterComponent
+    FooterComponent,
+    CategoryTable
   },
   data() {
     return {
       userData: [],
       productData: [],
       orderData: [],
+      categoryData: [],
       selectedKeys: ref(['1'])
     }
   },
@@ -103,6 +111,10 @@ export default {
     async getAllOrder() {
       let res = await getAllOrders()
       this.orderData = res.data
+    },
+    async getAllCategory() {
+      let res = await getAllCategory()
+      this.categoryData = res.data
     }
   },
   watch: {
