@@ -4,7 +4,7 @@
       <TheHeader />
     </a-layout-header>
     <a-layout-content style="background: #f5f5f5">
-      <a-layout style="background: #f5f5f5">
+      <a-layout style="background: #f5f5f5; height: 100%">
         <a-layout-sider width="300" style="background: #f5f5f5">
           <a-menu v-model:selectedKeys="selectedKeys">
             <a-menu-item key="1">
@@ -21,7 +21,10 @@
             </a-menu-item>
           </a-menu>
         </a-layout-sider>
-        <a-layout-content :style="{ padding: '0 24px', minHeight: '280px' }">
+        <a-layout-content
+          v-if="ordersData.length > 0"
+          :style="{ padding: '0 24px', minHeight: '280px' }"
+        >
           <div style="padding: 10px; font-size: px">
             <a-typography-text strong>Đơn Hàng Đã Mua</a-typography-text>
           </div>
@@ -75,6 +78,7 @@
 
               <a-divider />
             </div>
+
             <div style="display: inline-block">
               <label style="padding-right: 10px">Total: </label>
               <!-- Calculate total price for the order -->
@@ -84,8 +88,25 @@
             </div>
           </div>
         </a-layout-content>
+        <a-layout-content v-else>
+          <div
+            style="min-height: 400px; display: flex; justify-content: center; align-items: center"
+          >
+            <a-empty
+              image="https://gw.alipayobjects.com/mdn/miniapp_social/afts/img/A*pevERLJC9v0AAAAAAAAAAABjAQAAAQ/original"
+              :image-style="{
+                height: '60px'
+              }"
+            >
+              <template #description>
+                <span> Không có đơn hàng nào </span>
+              </template>
+            </a-empty>
+          </div>
+        </a-layout-content>
       </a-layout>
     </a-layout-content>
+
     <a-layout-footer style="text-align: center; padding: 0px 0px">
       <FooterComponent />
     </a-layout-footer>

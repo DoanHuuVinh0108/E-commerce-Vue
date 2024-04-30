@@ -8,36 +8,25 @@
       <div class="logo" />
       <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
         <a-menu-item key="1" @click="getAllUser()">
-          <user-outlined />
           <span class="nav-text">User Table</span>
         </a-menu-item>
         <a-menu-item key="2" @click="getAllProduct()">
-          <video-camera-outlined />
           <span class="nav-text">Product Table</span>
         </a-menu-item>
         <a-menu-item key="3" @click="getAllOrder()">
-          <upload-outlined />
           <span class="nav-text">Order Table</span>
         </a-menu-item>
         <a-menu-item key="4" @click="getAllCategory()">
-          <bar-chart-outlined />
           <span class="nav-text">Category Table</span>
         </a-menu-item>
-        <a-menu-item key="5">
-          <cloud-outlined />
-          <span class="nav-text">nav 5</span>
+        <a-menu-item key="5" @click="getAllGroup()">
+          <span class="nav-text">Group Table</span>
         </a-menu-item>
         <a-menu-item key="6">
-          <appstore-outlined />
-          <span class="nav-text">nav 6</span>
-        </a-menu-item>
-        <a-menu-item key="7">
-          <team-outlined />
-          <span class="nav-text">nav 7</span>
+          <span class="nav-text">Home</span>
         </a-menu-item>
         <a-menu-item key="8">
-          <shop-outlined />
-          <span class="nav-text">logout</span>
+          <span class="nav-text">Logout</span>
         </a-menu-item>
       </a-menu>
     </a-layout-sider>
@@ -61,6 +50,7 @@
             @refreshCategory="getAllCategory"
             v-if="selectedKeys == 4"
           />
+          <GroupTable :GroupData="groupData" @refreshGroup="getAllGroup" v-if="selectedKeys == 5" />
         </div>
       </a-layout-content>
       <a-layout-footer style="text-align: center; padding: 0px 0px">
@@ -75,7 +65,8 @@ import UserTable from '@/components/UserTable.vue'
 import ProductTable from '@/components/ProductTable.vue'
 import OrderTable from '@/components/OrderTable.vue'
 import CategoryTable from '@/components/CategoryTable.vue'
-import { getAllUser, getAllProduct, getAllCategory } from '../sevices/admin.service'
+import GroupTable from '@/components/GroupTable.vue'
+import { getAllUser, getAllProduct, getAllCategory, getAllGroup } from '../sevices/admin.service'
 import { getAllOrders } from '../sevices/user.service'
 import { userLoginStore } from '@/stores'
 import FooterComponent from '@/components/Footer.vue'
@@ -85,7 +76,8 @@ export default {
     ProductTable,
     OrderTable,
     FooterComponent,
-    CategoryTable
+    CategoryTable,
+    GroupTable
   },
   data() {
     return {
@@ -93,6 +85,7 @@ export default {
       productData: [],
       orderData: [],
       categoryData: [],
+      groupData: [],
       selectedKeys: ref(['1'])
     }
   },
@@ -115,6 +108,10 @@ export default {
     async getAllCategory() {
       let res = await getAllCategory()
       this.categoryData = res.data
+    },
+    async getAllGroup() {
+      let res = await getAllGroup()
+      this.groupData = res.data
     }
   },
   watch: {
@@ -123,6 +120,9 @@ export default {
         const { logout } = userLoginStore()
         logout()
         this.$router.push('/') // Navigate to login page after logout
+      }
+      if (newValue == 6) {
+        this.$router.push('/')
       }
     }
   }

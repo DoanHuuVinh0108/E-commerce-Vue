@@ -193,6 +193,41 @@ async function getCategoryById(id) {
   return false
 }
 
+async function getGroupById(id) {
+  const response = await axios.get(`/api/v1/group/get/${id}`)
+  if (response.status === 200) {
+    return response.data
+  }
+  return false
+}
+
+async function updateGroup(id, data) {
+  const api = axios.put(`/api/v1/group/update/${id}`, data)
+  const response = await toastMsgFromPromise(api)
+  if (response.status === 200) {
+    return true
+  }
+  return false
+}
+
+async function createGroup(data) {
+  const api = axios.post('/api/v1/group/create', data)
+  const response = await toastMsgFromPromise(api)
+  if (response.status === 200) {
+    return true
+  }
+  return false
+}
+
+async function deleteGroup(id) {
+  const api = axios.delete(`/api/v1/group/delete/${id}`)
+  const response = await toastMsgFromPromise(api)
+  if (response.status === 200) {
+    return true
+  }
+  return false
+}
+
 export {
   getAllUser,
   deleteUser,
@@ -215,5 +250,9 @@ export {
   createCategory,
   updateCategory,
   deleteCategory,
-  getCategoryById
+  getCategoryById,
+  getGroupById,
+  updateGroup,
+  createGroup,
+  deleteGroup
 }
