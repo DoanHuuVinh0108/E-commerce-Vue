@@ -1,3 +1,5 @@
+<!-- eslint-disable vue/multi-word-component-names -->
+// eslint-disable-next-line vue/multi-word-component-names
 <template>
   <div class="footer">
     <div class="container">
@@ -68,6 +70,7 @@ ul {
 .footer {
   background-color: #24262b;
   padding: 70px 0;
+  align-self: flex-end;
 }
 .footer-col {
   width: 25%;

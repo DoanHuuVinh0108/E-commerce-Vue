@@ -63,11 +63,48 @@ async function getAllOrders() {
   return false
 }
 
+async function searchByCategory(category) {
+  const response = await axios.get(`/api/v1/product/category/${category}`)
+  if (response.status === 200) {
+    return response.data
+  }
+  return false
+}
+
+async function searchByPrice(min, max) {
+  const payload = {
+    min: min,
+    max: max
+  }
+  const response = await axios.post(`/api/v1/product/price`, payload)
+  if (response.status === 200) {
+    return response.data
+  }
+  return false
+}
+
+async function searchByCategoryAndPrice(category, min, max) {
+  console.log(category, min, max)
+  const data = {
+    categoryid: category,
+    min: min,
+    max: max
+  }
+  const response = await axios.post(`/api/v1/product/category-price`, data)
+  if (response.status === 200) {
+    return response.data
+  }
+  return false
+}
+
 export {
   registerUser,
   searchProduct,
   orderProduct,
   getOrdersByUser,
   getNameAndImageProduct,
-  getAllOrders
+  getAllOrders,
+  searchByCategory,
+  searchByPrice,
+  searchByCategoryAndPrice
 }

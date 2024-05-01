@@ -17,7 +17,7 @@
             </a-menu-item>
             <a-menu-item key="3">
               <shop-outlined />
-              <span class="nav-text">logout</span>
+              <span class="nav-text">Logout</span>
             </a-menu-item>
           </a-menu>
         </a-layout-sider>

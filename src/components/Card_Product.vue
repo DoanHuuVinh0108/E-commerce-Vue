@@ -1,7 +1,7 @@
 <template>
   <div style="background-color: #ececec; padding: 20px">
     <a-row :gutter="[16, 16]">
-      <a-col :span="6" v-for="product in products" :key="product.Productid">
+      <a-col :span="colCard" v-for="product in products" :key="product.Productid">
         <a-card
           hoverable
           style="
@@ -37,6 +37,10 @@ export default {
     products: {
       type: Array,
       required: true
+    },
+    colCard: {
+      type: Number,
+      default: 6
     }
   },
   methods: {

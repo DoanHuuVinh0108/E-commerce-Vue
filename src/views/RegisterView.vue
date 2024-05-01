@@ -1,63 +1,72 @@
 <template>
-  <a-form
-    layout="horizontal"
-    :model="formState"
-    :label-col="labelCol"
-    :wrapper-col="wrapperCol"
-    name="register"
-    @finish="onFinish"
-    @finishFailed="onFinishFailed"
-    ref="formRef"
-    class="register-form"
-    :rules="rules"
-  >
-    <a-form-item label="Họ và tên" name="Hoten" ref="Hoten">
-      <a-input v-model:value="formState.Hoten">
-        <template #prefix>
-          <UserOutlined class="site-form-item-icon" />
-        </template>
-      </a-input>
-    </a-form-item>
+  <div class="site-layout-background">
+    <div class="form-container">
+      <a-form
+        layout="horizontal"
+        :model="formState"
+        :label-col="labelCol"
+        :wrapper-col="wrapperCol"
+        name="register"
+        @finish="onFinish"
+        @finishFailed="onFinishFailed"
+        ref="formRef"
+        class="register-form"
+        :rules="rules"
+      >
+        <a-form-item label="Họ và tên" name="Hoten" ref="Hoten">
+          <a-input v-model:value="formState.Hoten">
+            <template #prefix>
+              <UserOutlined class="site-form-item-icon" />
+            </template>
+          </a-input>
+        </a-form-item>
 
-    <a-form-item label="Email" name="Email" ref="Email">
-      <a-input v-model:value="formState.Email">
-        <template #prefix>
-          <UserOutlined class="site-form-item-icon" />
-        </template>
-      </a-input>
-    </a-form-item>
+        <a-form-item label="Email" name="Email" ref="Email">
+          <a-input v-model:value="formState.Email">
+            <template #prefix>
+              <UserOutlined class="site-form-item-icon" />
+            </template>
+          </a-input>
+        </a-form-item>
 
-    <a-form-item label="Mật khẩu" name="Matkhau" ref="Matkhau">
-      <a-input-password v-model:value="formState.Matkhau">
-        <template #prefix>
-          <LockOutlined class="site-form-item-icon" />
-        </template>
-      </a-input-password>
-    </a-form-item>
+        <a-form-item label="Mật khẩu" name="Matkhau" ref="Matkhau">
+          <a-input-password v-model:value="formState.Matkhau">
+            <template #prefix>
+              <LockOutlined class="site-form-item-icon" />
+            </template>
+          </a-input-password>
+        </a-form-item>
 
-    <a-form-item label="Địa chỉ" name="Diachi" ref="Diachi">
-      <a-input v-model:value="formState.Diachi">
-        <template #prefix>
-          <UserOutlined class="site-form-item-icon" />
-        </template>
-      </a-input>
-    </a-form-item>
+        <a-form-item label="Địa chỉ" name="Diachi" ref="Diachi">
+          <a-input v-model:value="formState.Diachi">
+            <template #prefix>
+              <UserOutlined class="site-form-item-icon" />
+            </template>
+          </a-input>
+        </a-form-item>
 
-    <a-form-item label="Số điện thoại" name="Sodienthoai" ref="Sodienthoai">
-      <a-input v-model:value="formState.Sodienthoai">
-        <template #prefix>
-          <UserOutlined class="site-form-item-icon" />
-        </template>
-      </a-input>
-    </a-form-item>
-    <a-form-item class="button">
-      <a-button :disabled="disabled" type="primary" html-type="submit" class="login-form-button">
-        Submit
-      </a-button>
-      Or
-      <a @click="login()">login now</a>
-    </a-form-item>
-  </a-form>
+        <a-form-item label="Số điện thoại" name="Sodienthoai" ref="Sodienthoai">
+          <a-input v-model:value="formState.Sodienthoai">
+            <template #prefix>
+              <UserOutlined class="site-form-item-icon" />
+            </template>
+          </a-input>
+        </a-form-item>
+        <a-form-item class="button">
+          <a-button
+            :disabled="disabled"
+            type="primary"
+            html-type="submit"
+            class="login-form-button"
+          >
+            Submit
+          </a-button>
+          Or
+          <a @click="login()">login now</a>
+        </a-form-item>
+      </a-form>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -153,6 +162,21 @@ export default {
 </script>
 
 <style>
+.form-container {
+  width: 400px;
+}
+
+.site-layout-background {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center; /* Center vertically */
+  padding-left: 30px;
+  background-size: cover; /* Cover the entire container */
+  background-position: center; /* Center the image */
+  background-attachment: fixed;
+  background-image: url('/src/assets/3d-illustration-smartphone-with-products-coming-out-screen-online-shopping-e-commerce-concept.jpg');
+}
 .button {
   margin-left: 50px;
 }

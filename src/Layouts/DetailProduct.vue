@@ -35,7 +35,7 @@
         </a-col>
         <a-col :span="12" style="background-color: #fff">
           <h1>{{ productData.Tensanpham }}</h1>
-          <h2>{{ formatPrice(productData.Giasanpham) }}</h2>
+          <h2 style="color: red">{{ formatPrice(productData.Giasanpham) }}</h2>
           <br />
           <div>
             <a-row style="margin: 20px">
@@ -152,6 +152,7 @@ import { LeftCircleOutlined, RightCircleOutlined } from '@ant-design/icons-vue'
 import { getImageByProductId, getProductById } from '@/sevices/admin.service.js'
 import { cartStore } from '@/stores/index.js'
 import FooterComponent from '@/components/Footer.vue'
+import { POSITION, useToast } from 'vue-toastification'
 export default {
   components: {
     TheHeader,
@@ -236,6 +237,20 @@ export default {
         Giasanpham: this.productData.Giasanpham,
         Tensanpham: this.productData.Tensanpham,
         image: this.firstImage
+      })
+      const toast = useToast()
+      toast('Thêm vào giỏ hàng thành công', {
+        timeout: 2000,
+        closeOnClick: true,
+        pauseOnFocusLoss: true,
+        position: POSITION.TOP_RIGHT,
+        pauseOnHover: true,
+        draggable: true,
+        draggablePercent: 0.6,
+        showCloseButtonOnHover: false,
+        hideProgressBar: false,
+        closeButton: 'button',
+        icon: true
       })
     }
   },

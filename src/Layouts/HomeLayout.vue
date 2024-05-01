@@ -14,7 +14,7 @@
         <a-pagination v-model:current="current" :total="this.Total" :pageSize="12" />
       </div>
     </a-layout-content>
-    <a-layout-footer :style="{ textAlign: 'center' }" style="padding: 0px 0px">
+    <a-layout-footer :style="{ textAlign: 'center' }" style="padding: 0px 0px" align="flex-end">
       <FooterComponent />
     </a-layout-footer>
   </a-layout>
