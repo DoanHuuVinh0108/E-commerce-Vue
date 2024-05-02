@@ -35,16 +35,31 @@
         <div class="footer-col">
           <h4>follow us</h4>
           <div class="social-links">
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><FacebookOutlined /></a>
+            <a href="#"><TwitterOutlined /></a>
+            <a href="#"><InstagramOutlined /></a>
+            <a href="#"><LinkedinOutlined /></a>
           </div>
         </div>
       </div>
     </div>
   </div>
 </template>
+
+<script>
+import { FacebookOutlined } from '@ant-design/icons-vue'
+import { TwitterOutlined } from '@ant-design/icons-vue'
+import { InstagramOutlined } from '@ant-design/icons-vue'
+import { LinkedinOutlined } from '@ant-design/icons-vue'
+export default {
+  components: {
+    FacebookOutlined,
+    TwitterOutlined,
+    InstagramOutlined,
+    LinkedinOutlined
+  }
+}
+</script>
 
 <style>
 body {

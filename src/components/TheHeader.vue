@@ -16,7 +16,7 @@
       style="float: left; display: flex; justify-content: flex-start; width: 30%"
     >
       <a-menu-item key="1"><RouterLink to="/">Home</RouterLink></a-menu-item>
-      <a-menu-item key="2"><RouterLink to="/about">About</RouterLink></a-menu-item>
+      <a-menu-item key="3"><RouterLink to="/search">Search Page</RouterLink></a-menu-item>
     </a-menu>
     <div
       style="display: flex; justify-content: center; align-items: center; background-color: #001529"

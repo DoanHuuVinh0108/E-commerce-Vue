@@ -52,7 +52,7 @@
           <a-select v-model:value="formState.Groupid">
             <a-select-option value=""> </a-select-option>
             <a-select-option v-for="group in groupsData" :key="group.Groupid" :value="group.Groupid"
-              >{{ group.TenNhom.toUpperCase() }}
+              >{{ group.Tennhom.toUpperCase() }}
             </a-select-option>
           </a-select>
         </a-form-item>

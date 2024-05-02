@@ -60,7 +60,7 @@
           <a-select v-model:value="formState.Groupid">
             <a-select-option value=""> </a-select-option>
             <a-select-option v-for="group in groupsData" :key="group.Groupid" :value="group.Groupid"
-              >{{ group.TenNhom.toUpperCase() }}
+              >{{ group.Tennhom.toUpperCase() }}
             </a-select-option>
           </a-select>
         </a-form-item>
@@ -80,7 +80,6 @@ export default defineComponent({
     // groupsData.value = getAllGroup()
     // console.log('groupsData', groupsData)
     const formRef = ref(null) // Define ref here for the form
-
     const showModal = async () => {
       visible.value = true
     }
@@ -89,6 +88,7 @@ export default defineComponent({
       try {
         const response = await getAllGroup()
         groupsData.value = response.data
+        console.log('groupsData', groupsData)
       } catch (error) {
         console.error('Failed to fetch groups:', error)
       }
